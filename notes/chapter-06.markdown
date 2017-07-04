@@ -53,4 +53,20 @@ Lots of code writen here: `Hangman`, `Hangman.Game` modules
 
 ## And start testing
 
+- Tests are located in the test/ subdirectory.
+
+The structure of a test file is
+
+    defmodule SomeTest do 
+      use ExUnit.Case
+        
+      test "a description of the test's purpose" do
+        # Elixir code
+      end
+    end
+
+## Pattern matching game state
+
+
+
 
