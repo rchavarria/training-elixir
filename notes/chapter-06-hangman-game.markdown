@@ -67,6 +67,19 @@ The structure of a test file is
 
 ## Pattern matching game state
 
+Pattern matching can replace conditional code in your functions.
 
+Patterns can match at many levels. For example, in
 
+    def make_move(game = %{ game_state: :won }, _guess)
+
+A `when` clause (also called a *guard* clause) can further restrict when a particular variant of a function can be called. The `when` is executed after the parameters are bound, so the values of parameters can be used.
+
+    def make_move(game = %{ game_state: state }, _guess) when state in [:won, :lost] do
+
+When I (Dave) code, I try to avoid conditional logic inside functions. Initially this was an experiment, but over time I’ve come to realize that this technique has improved the maintainability of my code.
+
+Fortunately, Elixir’s pattern matching supports a style of coding functions that can be largely condition free. When you write Elixir code, try to use this style. Writing in this style is slightly more verbose, but the code you produce is easier to understand, test, and change.
+
+## Chack for duplicate moves
 
