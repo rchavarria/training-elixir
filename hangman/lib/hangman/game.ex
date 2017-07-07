@@ -5,6 +5,7 @@ defmodule Hangman.Game do
     turns_left: 7,
     game_state: :initializing,
     letters:    [],
+    used:       MapSet.new()
   )
 
   def new_game() do
@@ -17,7 +18,24 @@ defmodule Hangman.Game do
     { game, tally(game) }
   end
 
-  def tally(game) do
+  def make_move(game, guess) do
+    # as we can't do pattern maching or use guard clauses with MapSet.member?,
+    # we need to delegate to a new function
+    game = accept_move(game, guess, MapSet.member?(game.used, guess))
+    { game, tally(game) }
+  end
+
+  def accept_move(game, _guess, _already_used = true) do
+    Map.put(game, :game_state, :already_used)
+  end
+
+  def accept_move(game, guess, _already_used) do
+    # update game state with a new MapSet into game.used
+    # the new MapSet is a new set with the new guess saved on it
+    Map.put(game, :used, MapSet.put(game.used, guess))
+  end
+
+  def tally(_game) do
     1234
   end
 

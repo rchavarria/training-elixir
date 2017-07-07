@@ -83,3 +83,7 @@ Fortunately, Elixir’s pattern matching supports a style of coding functions th
 
 ## Chack for duplicate moves
 
+Try to give each function body a single purpose. Conditional statements are an indication that you’re doing two things. Fixing this will sometimes involve writing a new helper function. This is a *good thing*.
+
+# YOUR TURN (((((     create a new temporary branch and change our implementation to use a list instead.    )))))))
+
