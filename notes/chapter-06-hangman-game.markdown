@@ -91,4 +91,5 @@ It wasn't too complicated. The difference might be just the performance if you d
 
 ## Score a good move
 
+********* You must learn about comprehensions   ********
 
