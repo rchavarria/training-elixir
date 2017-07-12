@@ -5,12 +5,17 @@ defmodule Hangman.Game do
     turns_left: 7,
     game_state: :initializing,
     letters:    [],
-    used:       MapSet.new()
+    used:       MapSet.new(),
+    used_list:  []
   )
 
   def new_game() do
+    new_game(Dictionary.random_word)
+  end
+
+  def new_game(word) do
     %Hangman.Game{
-      letters: Dictionary.random_word |> String.codepoints
+      letters: word |> String.codepoints
     }
   end
 
@@ -21,7 +26,11 @@ defmodule Hangman.Game do
   def make_move(game, guess) do
     # as we can't do pattern maching or use guard clauses with MapSet.member?,
     # we need to delegate to a new function
-    game = accept_move(game, guess, MapSet.member?(game.used, guess))
+
+    has_been_used = MapSet.member?(game.used, guess);
+    # has_been_used = Enum.any?(game.used_list, fn x -> x == guess end)
+
+    game = accept_move(game, guess, has_been_used)
     { game, tally(game) }
   end
 
@@ -32,11 +41,29 @@ defmodule Hangman.Game do
   def accept_move(game, guess, _already_used) do
     # update game state with a new MapSet into game.used
     # the new MapSet is a new set with the new guess saved on it
+
+    # Map.put(game, :used_list, [ guess | game.used_list ])
     Map.put(game, :used, MapSet.put(game.used, guess))
+    |> score_guess(Enum.member?(game.letters, guess))
+  end
+
+  def score_guess(game, _good_guess = true) do
+    new_state = MapSet.new(game.letters)      # create a MapSet from letters
+                |> MapSet.subset?(game.used)  # used letters are a subset of the word's letters?
+                |> maybe_won()                # user probably won the game, if not, he'll get a good guess
+
+    Map.put(game, :game_state, new_state)
+  end
+
+  def score_guess(game, _not_good_guess) do
+    game
   end
 
   def tally(_game) do
     1234
   end
+
+  def maybe_won(true), do: :won
+  def maybe_won(_),    do: :good_guess
 
 end

@@ -81,9 +81,15 @@ When I (Dave) code, I try to avoid conditional logic inside functions. Initially
 
 Fortunately, Elixir’s pattern matching supports a style of coding functions that can be largely condition free. When you write Elixir code, try to use this style. Writing in this style is slightly more verbose, but the code you produce is easier to understand, test, and change.
 
-## Chack for duplicate moves
+## Check for duplicate moves
 
 Try to give each function body a single purpose. Conditional statements are an indication that you’re doing two things. Fixing this will sometimes involve writing a new helper function. This is a *good thing*.
 
-# YOUR TURN (((((     create a new temporary branch and change our implementation to use a list instead.    )))))))
+Implement the same, but with a `List` instead of a `MapSet`. Has it been too complicated? What are the differences?
+
+It wasn't too complicated. The difference might be just the performance if you don't check for duplicates in the `List`. 
+
+## Score a good move
+
+********* You must learn about comprehensions   ********
 
