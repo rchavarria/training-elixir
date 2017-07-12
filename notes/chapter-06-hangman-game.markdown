@@ -152,4 +152,11 @@ iex> sum
 0
 ```
 
+## Refactory and tidy up
+
+At the beginning, it looked like a good idea to delegate all public methods of `Hangman` to `Hangman.Game`. But, now it doesn't seem to be a very good idea.
+
+`Hangman.new_game` delegates to `Hangman.Game.new_game`. But, `Hangman.make_move` will call two methods of `Hangman.Game` (`make_move` and `tally`) to return a better structure to clients, while keeping our implementation simple. Otherwise, all calls to `Hangman.Game.make_move` had to capture both `game` and `tally`.
+
+
 
