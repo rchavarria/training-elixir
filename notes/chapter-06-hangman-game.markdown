@@ -91,5 +91,65 @@ It wasn't too complicated. The difference might be just the performance if you d
 
 ## Score a good move
 
-********* You must learn about comprehensions   ********
+Elixir has a `for` keyword, but it isn’t like `for` in other languages, it isn’t really a loop.
+
+A basic comprehension looks like
+
+```
+result = for pattern <- collection do
+end
+```
+
+Each element of the collection is matched against the `pattern`, and the `do` block is executed. The result of the `do` block is then added as the next element of the result list.
+
+```
+iex> for i <- 1..5 do
+...>   i * 11
+...> end
+[11, 22, 33, 44, 55]
+```
+
+You can add more pattern/collection clauses to a for. It will nest the iterations such that the right iteration will be evaluated for each value on the left.
+
+Any clause that isn’t `pattern <- collection` will be treated as a predicate. It will be evaluated, and if falsey, this particular iteration will be abandoned and the next started.
+
+The `for` comprehension will generate a list by default. You can override this using the `into:` option, which lets you specify any kind of collection. 
+
+```
+iex> for name <- ~w{one two three}, val <- 1..3, into: %{}, do: { name, val }
+%{"one" => 3, "three" => 3, "two" => 3}
+
+iex> for str <- ~w{oNE Two tHrEe}, into: %{}, do: { String.downcase(str), str }
+%{"one" => "oNE", "three" => "tHrEe", "two" => "Two"}
+
+iex> for v <- ~w{ buckle my shoe }, into: [ 1, 2 ], do: v
+[1, 2, "buckle", "my", "shoe"]
+```
+
+Exercise with Pythagorean triangles (a^2 + b^2 = c^2):
+
+```
+:timer.tc(fn ->
+  for a <- 1..100, b <- (a+1)..100, c <- (b+1)..100, c*c == a*a + b*b, do: { a, b, c }
+end) |> IO.inspect
+```
+
+## Score a bad guess
+
+**Beaware of comprehensions**: The body of a comprehension is effectively the body of a function—it is called multiple times as the comprehension processes its collections. As a result, the values of variables in the scope that surrounds the comprehension are available inside (in the same way that the values would be captured by a function body). However, **changing the value of a variable inside the comprehension changes just that local copy**—the outer scope is not touched.
+
+For example:
+
+```
+iex> sum = 0
+0
+
+iex> for i <- 1..10, do: sum = sum + i
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# sum is not modified
+iex> sum
+0
+```
+
 
