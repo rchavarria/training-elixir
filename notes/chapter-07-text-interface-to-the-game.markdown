@@ -28,5 +28,13 @@ Put state that’s shared into its own module
 
 ## Write the main player
 
+What We Did
+
+Using the name of a structure when pattern matching a parameter is a form of type checking. I use the technique a lot when I’m first starting on a project, and I’m not yet 100% sure of my APIs.
+
+Using pattern matching and multiple function heads lets you build your code step by step. You don’t need all the functionality in place to be able to compile and test. And it's much better than an `if` or a `case`.
+
+We used an indirect recursive call (play calls continue calls play) to get successive move. We pass the updated state through this sequence, so we can track the game as it progresses.
+
 ## Finish up
 
