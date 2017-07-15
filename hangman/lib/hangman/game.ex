@@ -1,5 +1,7 @@
 defmodule Hangman.Game do
 
+  alias Hangman.Tally
+
   # Gets the same name as the module, Hangman.Game
   defstruct(
     turns_left: 7,
@@ -35,10 +37,11 @@ defmodule Hangman.Game do
   # tally means score, punctuation,...
   # so it can be build from the `game` itself
   def tally(game) do
-    %{
+    %Tally{
       game_state: game.game_state,
       turns_left: game.turns_left,
-      letters:    game.letters |> reveal_guessed(game.used)
+      letters:    game.letters |> reveal_guessed(game.used),
+      used:       game.used
     }
   end
 
