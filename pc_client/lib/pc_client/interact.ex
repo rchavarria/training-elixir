@@ -1,6 +1,6 @@
 defmodule PcClient.Interact do
 
-  alias PcClient.Guesser
+  alias PcClient.{Guesser, LengthGuesser, RegexGuesser}
 
   def start() do
     # Hangman.new_game("abcdef")
@@ -9,7 +9,9 @@ defmodule PcClient.Interact do
   end
 
   defp play_with_tally(game, tally) do
-    guess = Guesser.next_guess(tally)
+    # guess = Guesser.next_guess(tally)
+    # guess = LengthGuesser.next_guess(tally)
+    guess = RegexGuesser.next_guess(tally)
     { game, tally } = Hangman.make_move(game, guess)
     continue_with_tally(game, tally)
   end

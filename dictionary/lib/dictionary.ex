@@ -11,4 +11,9 @@ defmodule Dictionary do
     |> File.read!()
     |> String.split(~r/\n/)
   end
+
+  def words_of_length(len) do
+    word_list() |> Enum.filter(fn w -> String.length(w) == len end)
+  end
+
 end

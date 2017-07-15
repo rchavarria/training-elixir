@@ -18,6 +18,7 @@ defmodule PcClient.Mixfile do
   defp deps do
     [
       { :hangman, path: "../hangman" },
+      { :dictionary, path: "../dictionary" },
     ]
   end
 end
