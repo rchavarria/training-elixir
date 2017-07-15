@@ -7,16 +7,16 @@ defmodule TextClient.Prompter do
   end
 
   defp check_input({:error, reason}, _game) do
-    IO.puts("Game ended: #{reason}"
+    IO.puts("Game ended: #{reason}")
     exit :normal
   end
 
   defp check_input(:eof, _game) do
-    IO.puts("Looks like you gave up..."
+    IO.puts("Looks like you gave up...")
     exit :normal
   end
 
-  defp check_input({:ok, input}, game) do
+  defp check_input(input, game) do
     input = String.trim(input)
     cond do
       # input matches the regex: starts (\A) with a lowercase and ends (\z), just one char

@@ -38,6 +38,9 @@ We used an indirect recursive call (play calls continue calls play) to get succe
 
 ## Finish up
 
-*************************    VOY POR EL MINUTO 12
+We used pattern matching to handle the checking of the error conditions potentially returned by `IO.gets`
+
+The `cond` expression lets you write a series of conditions, each with some code. The code associated with the first matching condition is executed, and its value becomes the value of the `cond`.
+
 
 

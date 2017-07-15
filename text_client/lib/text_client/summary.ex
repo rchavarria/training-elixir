@@ -1,6 +1,6 @@
 defmodule TextClient.Summary do
 
-  def display(_game = %´{ tally: tally }) do
+  def display(game = %{ tally: tally }) do
     IO.puts [
       "\n",
       "Word so far: #{Enum.join(tally.letters, " ")}",
@@ -8,6 +8,8 @@ defmodule TextClient.Summary do
       "Guesses left: #{tally.turns_left}",
       "\n",
     ]
+
+    game
   end
 
 end
