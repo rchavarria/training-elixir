@@ -4,7 +4,7 @@ defmodule Hangman.Game do
 
   # Gets the same name as the module, Hangman.Game
   defstruct(
-    turns_left: 7,
+    turns_left: 30,
     game_state: :initializing,
     letters:    [],
     used:       MapSet.new(),
