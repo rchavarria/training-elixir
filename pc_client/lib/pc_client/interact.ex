@@ -1,27 +1,20 @@
 defmodule PcClient.Interact do
 
-  def start() do
-    guesses = "abcdefghijklmnopqrstuvwxyz"
-              |> String.codepoints
-              |> Enum.shuffle
+  alias PcClient.Guesser
 
+  def start() do
     # Hangman.new_game("abcdef")
     Hangman.new_game()
-    |> play(guesses)
+    |> play_with_tally(nil)
   end
 
-  defp play(game, []), do: game
-
-  defp play(game, [ current_guess | remaining_guesses ]) do
-    # hangman_game = { game, tally } = Hangman.make_move(game, current_guess)
-    # IO.inspect hangman_game
-    { game, tally } = Hangman.make_move(game, current_guess)
-
-    # IO.inspect tally
-    continue(game, tally, remaining_guesses)
+  defp play_with_tally(game, tally) do
+    guess = Guesser.next_guess(tally)
+    { game, tally } = Hangman.make_move(game, guess)
+    continue_with_tally(game, tally)
   end
 
-  defp continue(_game, tally = %{game_state: :lost}, _guesses) do
+  defp continue_with_tally(_game, tally = %{game_state: :lost}) do
     IO.puts [
       "\n",
       "You lose",
@@ -35,7 +28,7 @@ defmodule PcClient.Interact do
     ]
   end
 
-  defp continue(_game, tally = %{game_state: :won}, _guesses) do
+  defp continue_with_tally(_game, tally = %{game_state: :won}) do
     IO.puts [
       "\n",
       "You win",
@@ -49,8 +42,8 @@ defmodule PcClient.Interact do
     ]
   end
 
-  defp continue(game, _tally, guesses) do
-    play(game, guesses)
+  defp continue_with_tally(game, tally) do
+    play_with_tally(game, tally)
   end
 
 end
