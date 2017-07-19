@@ -8,8 +8,8 @@ defmodule FibonacciAgent.Cache do
     Agent.get(agent, &(&1))
   end
 
-  def update_fibs(agent, fibs) do
-    Agent.update(agent, fn _ -> fibs end)
+  def update_fibs(fibs, agent) do
+    Agent.get_and_update(agent, fn _ -> { fibs, fibs } end)
   end
 
 end
