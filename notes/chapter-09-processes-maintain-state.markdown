@@ -58,5 +58,9 @@ end
 
 ## Linking our fate to our children's fate
 
+By default, when a process fails, the *parent* process, the process who spawned it, is not notified. The spawning thing is *fire and forget*. Processes aren't linked to each other with `spawn`.
+
+If we want some kind of linking, we use `spawn_link`. What it does, is that if the child process dies, the parent processs dies too.  But if the child process exits normally (`exit(:normal)`), the parent process doesn't die. That's how processes work in Erlang by default and that's why these systems are quite reliable.
+
 ## Agents-Simple state holders
 
