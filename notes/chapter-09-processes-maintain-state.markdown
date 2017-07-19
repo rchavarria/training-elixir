@@ -31,7 +31,30 @@ It's done with `send`. It needs a *pid*.
 
 Messages sent to nonexistent processes are quietly thrown away.
 
-Use recursion to implement a receiver loop in your process.
+Use recursion to implement a receiver loop in your process. In that recursion, we can pass ourselves the same state, and that's a way of keeping state in processes.
+
+```
+defmodule Procs do
+  def greeter(count) do
+    receive do
+      msg -> #...
+    end
+    greeter(count)
+  end
+end
+```
+
+## Pattern matching messages
+
+In the `receive` block we can do pattern matching.
+
+```
+receive do
+  { :add, n } -> # ...
+  { :del, n } -> # ...
+  msg         -> # ...
+end
+```
 
 ## Linking our fate to our children's fate
 

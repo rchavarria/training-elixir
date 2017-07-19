@@ -1,13 +1,15 @@
 defmodule Procs do
 
-  def greeter(what_to_say) do
+  def greeter(count) do
     receive do
+      { :add, n } ->
+        greeter(count + n)
+      :reset ->
+        greeter(0)
       msg ->
-        IO.puts "#{what_to_say}: #{msg}"
+        IO.puts "#{count}: Hello #{inspect msg}"
+        greeter(count)
     end
-   
-    # create a recursive loop to have the process alive forever
-    greeter(what_to_say)
   end
 
 end
