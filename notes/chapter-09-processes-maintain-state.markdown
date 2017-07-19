@@ -64,3 +64,39 @@ If we want some kind of linking, we use `spawn_link`. What it does, is that if t
 
 ## Agents-Simple state holders
 
+Agents are an abstraction that keep state in a separate process.Class
+
+You call `Agent.start_link` with a function to initialize the state.
+
+`Agent.get(pid, func)` runs the function in the agent, passing it the state. The value returned by the function is the value returned by get.
+
+`Agent.update(pid, func)` runs the function in the agent, passing it the state. The value returned by the function becomes the new state.
+
+`Agent.get_and_update(pid, func)` runs the function with the state. The function should return a two-element tuple containing the return value to be passed to the caller and the updated state.
+
+A Personal Rant About Naked Agents
+
+But they are also open to abuse. In particular, an agent contains just state—all functions that work on that state are provided externally, in calls to get, update, and so on.
+
+Because of this, I think it is crucially important to wrap every one of your agents inside a module, and only expose them through that module’s API.
+
+```
+defmodule HitCount do
+
+  def start() do
+    Agent.start_link(fn -> 0 end)
+  end
+
+  def record_hit(agent) do
+    Agent.update(agent, &(&1 + 1))
+  end
+
+  def get_count(agent) do
+    Agent.get(agent, &(&1))
+  end
+
+end
+```
+
+The use of an agent is an *implementation detail*. **It should never leak into the rest of your code**.
+
