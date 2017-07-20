@@ -13,11 +13,19 @@ defmodule Cache.Fibonacci do
     }
   end
 
-  def get_value_for(n) do
+  def lookup(n, compute_value_to_cache_it) do
     Agent.get(@me, fn sequence -> sequence[n] end)
+    |> compute_if_not_exists(n, compute_value_to_cache_it)
   end
 
-  def add_value_for(fibonacci, n) do
+  defp compute_if_not_exists(nil, n, computation) do
+    computation.()
+    |> add_value_for(n)
+  end
+
+  defp compute_if_not_exists(value_to_cache, _n, _computation), do: value_to_cache
+
+  defp add_value_for(fibonacci, n) do
     Agent.get_and_update(@me, fn sequence ->
       { fibonacci, Map.put(sequence, n, fibonacci) }
     end)
