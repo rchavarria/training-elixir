@@ -38,3 +38,13 @@ The Elixir documentation is always worth reading. The section covering [supervis
 
 ## Other people write this differently
 
+The rest of the world, would write Hangman game in a different way: they'll write the API (`/lib/hangman.ex`) the GenServer (`/lib/hangman/server.ex`) and the game implementation (`/lib/hangman/game.ex`) in the same file.
+
+**Your Turn**
+
+Create a new throwaway branch in your copy of the Hangman project, and reorganize it so that the API, implementation, and GenServer stuff is all in a single source file.
+
+Go through that file and make every function definition that isn’t an API or a GenServer callback private. This is the way people would write this type of server.
+
+Now update the tests to get them working.
+
