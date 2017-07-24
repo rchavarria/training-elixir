@@ -4,7 +4,7 @@ defmodule Hangman.Game do
 
   # Gets the same name as the module, Hangman.Game
   defstruct(
-    turns_left: 30,
+    turns_left: 7,
     game_state: :initializing,
     letters:    [],
     used:       MapSet.new(),
@@ -23,6 +23,7 @@ defmodule Hangman.Game do
 
   def make_move(game = %{ game_state: state }, _guess) when state in [:won, :lost] do
     game
+    |> return_with_tally()
   end
 
   def make_move(game, guess) do
@@ -30,7 +31,10 @@ defmodule Hangman.Game do
     # we need to delegate to a new function
     lowercase_guess = guess == String.downcase(guess)
     accept_lowercase_guess(game, guess, lowercase_guess)
+    |> return_with_tally()
   end
+
+  defp return_with_tally(game), do: { game, tally(game) }
 
   # a "tally" is a summary of the game, information about the game that will be useful
   # to the client.

@@ -27,53 +27,53 @@ defmodule GameTest do
       # use pattern matching in the assertion. ^ is used to keep the binding in the left
       # hand side of game, so that it must be the same as the game in the right hand side
       # for the pattern matching to work
-      assert ^game = Game.make_move(game, "x")
+      assert { ^game, _ } = Game.make_move(game, "x")
     end
   end
 
   test "first occurrence of letter is not already used" do
     game = Game.new_game()
-    game = Game.make_move(game, "x")
+    { game, _ } = Game.make_move(game, "x")
     assert game.game_state != :already_used
   end
 
   test "only lowercase guesses are allowed" do
     game = Game.new_game()
-    game = Game.make_move(game, "X")
+    { game, _ } = Game.make_move(game, "X")
     assert game.game_state == :only_lowercase_allowed
   end
 
   test "second occurrence of letter is already used" do
     game = Game.new_game()
-    game = Game.make_move(game, "x")
+    { game, _ } = Game.make_move(game, "x")
     assert game.game_state != :already_used
 
-    game = Game.make_move(game, "x")
+    { game, _ } = Game.make_move(game, "x")
     assert game.game_state == :already_used
   end
 
   test "a good guess is recognized" do
     game = Game.new_game("wibble")
-    game = Game.make_move(game, "w")
+    { game, _ } = Game.make_move(game, "w")
     assert game.game_state == :good_guess  # I did a good guess
     assert game.turns_left == 7       # I didn't lose a turn
   end
 
   test "a guessed word is a won game" do
     game = Game.new_game("wibble")
-    game = Game.make_move(game, "w")
+    { game, _ } = Game.make_move(game, "w")
     assert game.game_state == :good_guess
     assert game.turns_left == 7
-    game = Game.make_move(game, "i")
+    { game, _ } = Game.make_move(game, "i")
     assert game.game_state == :good_guess
     assert game.turns_left == 7
-    game = Game.make_move(game, "b")
+    { game, _ } = Game.make_move(game, "b")
     assert game.game_state == :good_guess
     assert game.turns_left == 7
-    game = Game.make_move(game, "l")
+    { game, _ } = Game.make_move(game, "l")
     assert game.game_state == :good_guess
     assert game.turns_left == 7
-    game = Game.make_move(game, "e")
+    { game, _ } = Game.make_move(game, "e")
     assert game.game_state == :won
     assert game.turns_left == 7
   end
@@ -90,7 +90,7 @@ defmodule GameTest do
     game = Game.new_game("wibble")
 
     Enum.reduce(moves, game, fn ({ guess, state }, game) -> 
-      game = Game.make_move(game, guess)
+      { game, _ } = Game.make_move(game, guess)
       assert game.game_state == state
       assert game.turns_left == 7
 
@@ -100,7 +100,7 @@ defmodule GameTest do
 
   test "bad guess is recognized" do
     game = Game.new_game("wibble")
-    game = Game.make_move(game, "x")
+    { game, _ } = Game.make_move(game, "x")
     assert game.game_state == :bad_guess
     assert game.turns_left == 6
   end
@@ -119,7 +119,7 @@ defmodule GameTest do
     game = Game.new_game("w")
 
     Enum.reduce(moves, game, fn ({ guess, state, turns_left }, game) -> 
-      game = Game.make_move(game, guess)
+      { game, _ } = Game.make_move(game, guess)
       assert game.game_state == state
       assert game.turns_left == turns_left
 
