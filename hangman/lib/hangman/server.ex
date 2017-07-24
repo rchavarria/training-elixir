@@ -24,4 +24,9 @@ defmodule Hangman.Server do
     { :reply, tally, game }
   end
 
+  # state is the `game` that saves the GenServer
+  def handle_call({ :tally }, _from, game) do
+    { :reply, Game.tally(game), game }
+  end
+
 end
