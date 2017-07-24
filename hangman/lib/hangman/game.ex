@@ -1,5 +1,6 @@
 defmodule Hangman.Game do
 
+  use GenServer
   alias Hangman.Tally
 
   # Gets the same name as the module, Hangman.Game
@@ -11,22 +12,74 @@ defmodule Hangman.Game do
     used_list:  []
   )
 
+  ########################################################################################
+  #  API                     #
+  ############################
+
   def new_game() do
-    new_game(Dictionary.random_word)
+    # instead of starting the game with `Server.new_game`, we need to use
+    # the supervisor instead
+    {:ok, game_pid } = Supervisor.start_child(Hangman.Supervisor, [])
+    game_pid
   end
 
-  def new_game(word) do
+  def tally(game_pid) do
+    GenServer.call(game_pid, { :tally })
+  end
+
+  def make_move(game_pid, guess) do
+    GenServer.call(game_pid, { :make_move, guess })
+  end
+
+  ########################################################################################
+  #  Server                  #
+  ############################
+
+  def start_link() do
+    GenServer.start_link(__MODULE__, nil)
+  end
+
+  def init(_arguments) do
+    game = do_new_game()
+
+    # init must return a tuple, :ok and GenServer's state
+    { :ok, game }
+  end
+
+  # state is the `game` that saves the GenServer
+  def handle_call({ :make_move, guess }, _from, game) do
+    { game, tally } = do_make_move(game, guess)
+
+    # return a reply, the tally will be returned to the caller and
+    #game will be the new GenServer state
+    { :reply, tally, game }
+  end
+
+  # state is the `game` that saves the GenServer
+  def handle_call({ :tally }, _from, game) do
+    { :reply, do_tally(game), game }
+  end
+
+  ########################################################################################
+  #  Implementation          #
+  ############################
+
+  def do_new_game() do
+    do_new_game(Dictionary.random_word)
+  end
+
+  def do_new_game(word) do
     %Hangman.Game{
       letters: word |> String.codepoints
     }
   end
 
-  def make_move(game = %{ game_state: state }, _guess) when state in [:won, :lost] do
+  def do_make_move(game = %{ game_state: state }, _guess) when state in [:won, :lost] do
     game
     |> return_with_tally()
   end
 
-  def make_move(game, guess) do
+  def do_make_move(game, guess) do
     # as we can't do pattern maching or use guard clauses with String.downcase
     # we need to delegate to a new function
     lowercase_guess = guess == String.downcase(guess)
@@ -34,13 +87,13 @@ defmodule Hangman.Game do
     |> return_with_tally()
   end
 
-  defp return_with_tally(game), do: { game, tally(game) }
+  defp return_with_tally(game), do: { game, do_tally(game) }
 
   # a "tally" is a summary of the game, information about the game that will be useful
   # to the client.
   # tally means score, punctuation,...
   # so it can be build from the `game` itself
-  def tally(game) do
+  def do_tally(game) do
     %Tally{
       game_state: game.game_state,
       turns_left: game.turns_left,
