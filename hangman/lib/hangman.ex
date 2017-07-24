@@ -1,9 +1,10 @@
 defmodule Hangman do
 
-  alias Hangman.Server
-
   def new_game() do
-    Server.start_link()
+    # instead of starting the game with `Server.new_game`, we need to use
+    # the supervisor instead
+    {:ok, game_pid } = Supervisor.start_child(Hangman.Supervisor, [])
+    game_pid
   end
 
   def tally(game_pid) do

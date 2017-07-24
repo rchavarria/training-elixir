@@ -24,5 +24,17 @@ Once that process is running, and before anything else happens, the `GenServer` 
 
 ## A dynamic cloud of hangman servers
 
+The easiest way of having our library/application supervised by a supervisor, is to make it an Application. Then, start a Supervisor from that Application.
+
+If you know a new project is going to be an application, or to need a top-level supervisor, create it using the `--sup` flag. That creates a default supervised application for you.
+
+```
+$ mix new my_app --sup
+```
+
+The `simple_one_for_one` strategy is perfect for creating dynamic pools of the same server. When initialized a `simple_one_for_one` supervisor creates no server processes. Create a new servers with `Supervisor.start_child`. So, at the beginning, there'll be no servers. When clients start using them, they'll be created as supervised.
+
+The Elixir documentation is always worth reading. The section covering [supervisors](https://hexdocs.pm/elixir/Supervisor.html) is particularly good.
+
 ## Other people write this differently
 
