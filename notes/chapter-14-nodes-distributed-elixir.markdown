@@ -27,9 +27,25 @@ So, you can use whatever you want to send messages to a process
 
 ## Sending Messages Between Nodes in IEx
 
+There is no to connect explicitly two nodes. The first time a node tries to send a message to the second one, they will try to connect, and they'll connect each other, because connections are transitive.
 
+Create two `iex` sessions, passing in the parameter `--sname` to give them names. In one of them, spawn a process (like the one in `code/chapter-14/demo.exs`):
+
+    iex> pid = spawn(Demo, :reverse, [])
+
+Then, register a name for that process
+
+    iex> Process.register(pid, :rev)
+
+From the second `iex` node, send a message to the spawned process:
+
+    iex> send { :rev, :one@your_host }, "this is the message"
+
+To send a message to a different node you must specify a pid (or a registered name, that is much easier to know) and the node name
 
 ## A Bigger Example—a Chain of Nodes
+
+
 
 ## Implementing the Chain
 
