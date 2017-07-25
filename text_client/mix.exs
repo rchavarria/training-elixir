@@ -12,12 +12,18 @@ defmodule TextClient.Mixfile do
 
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger]]
+    [
+      # these applications are not started automatically, but the code is available
+      #(loaded) to this project
+      included_applications: [ :hangman ],
+
+      extra_applications:    [ :logger ],
+    ]
   end
 
   defp deps do
     [
-      { :hangman, path: "../hangman" },
+      hangman: path: "../hangman",
     ]
   end
 end
