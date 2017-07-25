@@ -43,6 +43,8 @@ From the second `iex` node, send a message to the spawned process:
 
 To send a message to a different node you must specify a pid (or a registered name, that is much easier to know) and the node name
 
+If we have a `IO.puts` statement in a module, and it receives a message: where does the message output? into the process that calls or into the process that is called? It's shown in the process that calls, because the input and the output buffers are processes themselves, and `IO.puts` sends messages to those processes, it sends messages to the process making the call, so it doesn't necessarily appear where the code is running.
+
 ## A Bigger Example—a Chain of Nodes
 
 We're gonna build a chain of several nodes, so each node will add it's name to a list and then pass this list to the next node. The message will turn several times:
@@ -50,7 +52,4 @@ We're gonna build a chain of several nodes, so each node will add it's name to a
     [:one]  -->  [:two, :one]  -->  [:three, :two, :one]  --> [:one, :three, :two, :one]  --> [:two, :one, :three,...]
 
 ## Implementing the Chain
-
-
-
 
