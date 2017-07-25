@@ -31,3 +31,19 @@ In `mix.ex`, we have Hangman as a dependency, and `mix` starts any dependency th
 
 ## Start remote server when TextClient starts
 
+TextClient creates a new game with `Hangman.new_game()`. But it creates the Hangman server in the same node.
+
+To start it in another node, let's see we have a node where Hangman server is running and we know the name of the node, for example, it's running on `:"hangman@virtualized-ubuntu"`
+
+**What We Saw**
+
+Erlang’s [rpc library](http://erlang.org/doc/man/rpc.html) allows us to call functions in other (connected) nodes.
+
+`Hangman.new_game` returns a pid. Because this return value crosses a node boundary, the runtime will automatically include the node ID in it. Calls made using that will will automatically run in the Hangman server’s node.
+
+**What We Didn’t See**
+
+I had to assume I had a running Hangman server, and I had to start it manually from the command line. This isn’t the basis of a reliable, scalable system. What’s missing is a kind of substrate that can be used to connect all these parts. And that’s what the rest of the course covers.
+
+We’re about to start looking at the Phoenix framework. Many people view Phoenix as a web framework. I think this is wrong. In my view, Phoenix is actually a **really good switch**, exchanging data between clients and servers, and between servers themselves. **It makes it easy to connect things**.
+
