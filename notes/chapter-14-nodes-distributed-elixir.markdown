@@ -45,8 +45,12 @@ To send a message to a different node you must specify a pid (or a registered na
 
 ## A Bigger Example—a Chain of Nodes
 
+We're gonna build a chain of several nodes, so each node will add it's name to a list and then pass this list to the next node. The message will turn several times:
 
+    [:one]  -->  [:two, :one]  -->  [:three, :two, :one]  --> [:one, :three, :two, :one]  --> [:two, :one, :three,...]
 
 ## Implementing the Chain
+
+
 
 
