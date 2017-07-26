@@ -1,11 +1,10 @@
 defmodule Hangman do
 
   def new_game() do
-
     Hangman.VisitorCounter.start_link()
     visits = Hangman.VisitorCounter.update_counts()
 
-    IO.puts "Creating a new game, your the #{visits}th visit"
+    IO.puts "Creating a new game, you're the #{visits}th visit"
 
     # instead of starting the game with `Server.new_game`, we need to use
     # the supervisor instead
