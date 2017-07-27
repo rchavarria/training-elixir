@@ -2,9 +2,13 @@ defmodule Hangman do
 
   def new_game() do
     Hangman.VisitorCounter.start_link()
-    visits = Hangman.VisitorCounter.update_counts()
+    Hangman.NodeNames.start_link()
 
-    IO.puts "Creating a new game, you're the #{visits}th visit"
+    visits = Hangman.VisitorCounter.update_counts()
+    IO.puts "Creating a new game, you're the visit number #{visits}"
+
+    remote_nodes = Hangman.NodeNames.update_names()
+    IO.puts "Remote node name #{inspect remote_nodes}"
 
     # instead of starting the game with `Server.new_game`, we need to use
     # the supervisor instead

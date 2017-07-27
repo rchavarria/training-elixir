@@ -1,6 +1,6 @@
 defmodule TextClient.Interact do
 
-  @hangman_server :"hangman@virtualized-ubuntu"
+  @hangman_server :"hangman@ubuntuvm"
 
   alias TextClient.{ State, Player }
 
