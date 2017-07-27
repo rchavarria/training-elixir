@@ -6,10 +6,17 @@ defmodule Hangman.NodeNames do
     Agent.start_link(fn -> [] end, name: @me)
   end
 
-  def update_names() do
+  def add_remote_node() do
     remote_node = remote_node_name()
     Agent.get_and_update(@me, fn names ->
       names = [ remote_node | names ] 
+      { names, names }
+    end)
+  end
+
+  def delete_node(node) do
+    Agent.get_and_update(@me, fn names ->
+      names = names |> List.delete(node)
       { names, names }
     end)
   end

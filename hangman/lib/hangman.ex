@@ -7,7 +7,7 @@ defmodule Hangman do
     visits = Hangman.VisitorCounter.update_counts()
     IO.puts "Creating a new game, you're the visit number #{visits}"
 
-    remote_nodes = Hangman.NodeNames.update_names()
+    remote_nodes = Hangman.NodeNames.add_remote_node()
     IO.puts "Remote node name #{inspect remote_nodes}"
 
     # instead of starting the game with `Server.new_game`, we need to use

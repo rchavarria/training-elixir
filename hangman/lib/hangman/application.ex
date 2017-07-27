@@ -29,19 +29,4 @@ defmodule Hangman.Application do
     Supervisor.start_link(children, options)
   end
 
-  def handle_info({ :nodeup, node }, game) do
-    IO.puts "Node #{inspect node} is added"
-    { :noreply, game }
-  end
-
-  def handle_info({ :nodedown, node }, game) do
-    IO.puts "Node #{inspect node} is removed"
-    { :noreply, game }
-  end
-
-  def handle_info(msg, game) do
-    IO.puts "Received #{inspect msg}"
-    { :noreply, game }
-  end
-
 end
