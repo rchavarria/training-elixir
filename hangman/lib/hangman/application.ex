@@ -3,9 +3,6 @@ defmodule Hangman.Application do
   use Application
 
   def start(_type, _args) do
-    # start monitoring nodes
-    :ok = :net_kernel.monitor_nodes(true)
-
     # needed for some Supervisor features
     import Supervisor.Spec
 

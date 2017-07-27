@@ -11,7 +11,7 @@ defmodule Hangman.Server do
   end
 
   def init(_arguments) do
-    # :ok = :net_kernel.monitor_nodes(true)
+    :ok = :net_kernel.monitor_nodes(true)
     Process.flag(:trap_exit, true)
     game = Game.new_game()
     # init must return a tuple, :ok and GenServer's state
