@@ -1,0 +1,3 @@
+<div class="jumbotron">
+  <h2><%= plural_off(@produce, @count) %></h2>
+</div>
