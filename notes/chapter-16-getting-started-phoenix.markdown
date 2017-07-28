@@ -180,3 +180,37 @@ These variables are only available inside <%...%> constructs.
 
 ## Phoenix: a toolkit, not a framework
 
+What it's not:
+
+- A web framework
+- Ruby on rails replacement
+
+So, what's:
+
+- A switch: get data from a connection and sends a response to another connection
+
+Flow:
+
+1. Incoming request
+    1.a. add request id
+    1.b. log row request
+    1.c. parse content
+    1.d. determine verb (get, post,...)
+    1.e. decode session information
+    1.f. route to handler
+    1.g. **invoke app**: everything but this is the framework's job, this is **your** job
+    1.h. format response
+    
+As a flow, it could be as if a `connection` passes through a pipeline. But Phoenix doesn't use pipelines, it uses something more flexible, *plugs* is called.
+
+A *plug* is something very simple, it's what is known as a *reducer*. It takes two arguments: a connection and some options, and return a connection.
+
+Everything starts with an external connection (user request). It passes through some plugs: endpoint, router, controller, view and template:
+
+- Endpoint: it contains some specific plugs, depending on the connection: add request id, log request, parse content, determine verb, decode session information, route to...
+- Router: it also contains some specific plugs, also depending on the connection type: match paths and methods, dispatch to a function in a...
+- Controller: your code, it extracts args from request, invokes your application logic and renders a response
+- View: it may contain some logic just for the view
+- Tempalte: replace values into the page
+- Browser. \o/
+
