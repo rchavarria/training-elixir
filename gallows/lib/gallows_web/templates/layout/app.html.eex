@@ -9,6 +9,9 @@
 
     <title>Hello Gallows!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <style>
+    body { background-color: pink; }
+    </style>
   </head>
 
   <body>
@@ -20,6 +23,7 @@
           </ul>
         </nav>
         <span class="logo"></span>
+        <img src="<%= static_path(@conn, "/images/cat.jpg") %>"/>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

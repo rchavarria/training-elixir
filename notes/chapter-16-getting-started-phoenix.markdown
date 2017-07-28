@@ -140,9 +140,43 @@ iex> EEx.eval_string "Hello <%= @place %>", assigns: [ place: "world" ]
 
 Phoenix uses this technique.
 
+**Helpers**
+
+Don't get used to Elixir code in templates, use helper functions for that. The virtuous developer, though, will make such code into helper functions, and place it in a module in the views/ directory.
+
+A naming convention links controllers, views and templates. If I render `index.html` from within the `PageController`, the actual work of rendering will be handed off to the `PageView` module. Any functions defined in this module will be available in any template it renders. The view will then look for the template file itself in `templates/page/index.html.eex` and invoke `EEx` on it, passing in any assigns.
+
+In general, if the `AbcController` is handling a request, and it renders `xyz.html`, then the view logic will be handled by `views/abc_view` and the template in `templates/abc/xyz.html.eex` will be rendered. All these defaults can be overridden.
+
+Also, remember that helpers are just functions. If you know the name of a helper’s module, you can call that helper using its fully-qualified name from any view. Also, you can import modules containing shared helper functions into any view.
+
 ## Rendering
 
+The rendered HTML for a particular controller function is wrapped in an outer template before being sent back to the browser. This outer template typically includes all the page housekeeping (the <head> section, the basic page layout in the <body>, and the inclusion of all the assets. The default outer template is called app.html.eex. You can override this for particular controllers or controller functions.
+
+**Assets and Brunch**
+
+Brunch configuration is in `assets/brunch-config.js`. In a nutshell:
+
+- Assets are built into `priv/static`.
+- JavaScript files are built from `assets/js/app.js`, and the result is placed in `priv/static/js/app.js`.
+- Stylesheets are read from `assets/css` and the result is concatenated into `priv/static/css/app.css`. If you want to create application-specific styles, start in `assets/css/app.css.
+- Babel is run on all JavaScript outside the vendor tree. No CSS proprocessing is applied by default.
+- All files in `assets/static` will be copied to `priv\static`.
+
+All this asset juggling means that you can’t just slap a path to an image into a template and expect it to work when you deploy your app. Instead you use build in helper functions to create the appropriate asset paths for you.
+
+For example, if you have an image of a wombat that’s just perfect for your home page, you could store the image file in your project tree in `assets/static/images/wombat.jpg`
+
+Then, in your home page template, you’d reference it using: `<img src="<%= static_path(@conn, "/images/wombat.jpg") %>">`
+
 ## Assigns and @variables
+
+A map or keyword list can be passed as the third parameter to render. It defines a set of variables that are then available in the template. These variables are called *assigns*.
+
+Within the template, you access an assign by prefixing its name with a at-sign (`@produce`).
+
+These variables are only available inside <%...%> constructs.
 
 ## Phoenix: a toolkit, not a framework
 
