@@ -18,6 +18,9 @@ defmodule GallowsWeb.Router do
 
     # visiting /hangman/ will call HangmanController.new_game()
     get "/", HangmanController, :new_game
+
+    post "/", HangmanController, :create_game
+
   end
 
   # Other scopes may use custom stacks.
