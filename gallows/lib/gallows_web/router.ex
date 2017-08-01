@@ -21,6 +21,8 @@ defmodule GallowsWeb.Router do
 
     post "/", HangmanController, :create_game
 
+    put "/", HangmanController, :make_move
+
   end
 
   # Other scopes may use custom stacks.

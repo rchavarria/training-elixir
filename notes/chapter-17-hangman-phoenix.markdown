@@ -71,6 +71,70 @@ Helpers are just functions, and so you can put them anywhere, and you can share 
 
 ## Add a form
 
+To add a form, please, use a helper. It fills some structures Phoenix knows about, it covers against some security issues (cross session forgery blah blah)
+
+We previously used HTTP GET and POST verbs. In this unit we used PUT, because we wanted to modify existing data (the game state).
+
+**Where Form Data Goes**
+
+A Phoenix `form_for` helper can construct an HTML form that will be initially populated by data send from your Phoenix controller, and which can send data back to the controller when the form is submitted.
+
+Out of the box, there are two built-in strategies for managing this data. One works with Ecto changesets, so that forms can interoperate fairly seamlessly with data held in databases.
+
+The other strategy keeps form data in the connection value. In this scheme, form data is treated in the same way as parameters that can be passed via the incoming request.
+
+**Request Parameters**
+
+HTTP lets you add a query string to a request: `http://example.com/lookup?term=wombat&type=image`
+
+If you sent this request to a Phoenix application, the controller function handling it would receive a params parameter containing the query string, broken down into a map:
+
+```
+def lookup(conn, params) do
+  raise inspect(params)        # => %{ "term" => "wombat, "type" => "image" }
+end
+```
+
+You can even pass parameters which create nested maps: `http://example.com/lookup?name[first]=Dave&name[last]=Thomas`
+
+```
+def lookup(conn, params) do
+  raise inspect(params)        # => %{ "name" => %{
+end                                        "first" => "Dave",
+                                           "last"  => "Thomas"
+                                            }
+                                      }
+```
+
+Finally you can specify parameters by associating elements in the path with names. This is done in your routes: `get "/lookup/:first/:last", .....`
+
+You can look that up in the Phoenix documentation.
+
+**Back to Forms**
+
+Another way to populate params is using a submitted form. Each field in the form has a name and a value, and those are used to populate a map when the form is submitted. When you create the form using `form_for`, you use the `as:` name option to specify a name for that map.
+
+For example, here’s a form with the name `make_move` containing a text field named `guess`.
+
+```
+<%= form_for(@conn, "/lookup", [ as: :make_move,], fn form -> %>
+  <%= text_input(form, :guess) %>
+  <%= submit("Make next move") %>
+<% end) %>
+```
+
+Data from this form would appear in the `params` map like this:
+
+```
+def lookup(conn, params) do
+  raise inspect(params)        # => %{ "make_move" => %{
+end                                        "guess" => "x"
+                                            }
+                                     }
+```
+
+Similarly, if you call `render` and the connection parameters contains values corresponding to form fields, the HTML form will use them as initial values.
+
 ## More complex helpers
 
 ## Wrapping up: adding graphics
