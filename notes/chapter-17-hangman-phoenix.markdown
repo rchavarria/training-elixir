@@ -137,5 +137,21 @@ Similarly, if you call `render` and the connection parameters contains values co
 
 ## More complex helpers
 
+Think hard before substituting values into strings that will be sent to the browser without escaping. This practice can be a major security hole. Just about the only time you can get away with it is when the strings are private constants stored in your code.
+
+`raw(str)` (inside a View) is the same as `{:safe, str}`—both disable HTML escaping or strings. Following on from the previous point, whenever you use on of these, accept that you might be opening the security hole that gets your app free publicity on the nightly news.
+
+Because built-in helpers are just functions that are imported into views, they are available to the helpers that you write in that view. This means your helpers can wrap and extent the standard ones, such as `button` and `form_for`.
+
+Complex helper logic in your views should be split into its own module. This module can be placed anywhere; my preference is `views/helpers`.
+
+Helpers extracted in this way will not longer be in the view module directly, and therefore won’t have the built-in helpers automatically available. However, you can import them directly and they’ll just work.
+
+**A Personal Rant About Single Responsibility Principle**
+
+I know I’m like a broken record, but I can’t help it. I’m really excited to see how a functional approach makes it so much easier to honor the SRP, both at the function and module level. The fact that state is passed around, and not simply shared, means that functions can and modules can both be split and moved around.
+
+Take advantage of this to keep your all your code neat, tidy, and to the point.
+
 ## Wrapping up: adding graphics
 
