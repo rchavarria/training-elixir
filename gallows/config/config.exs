@@ -5,6 +5,12 @@
 # is restricted to this project.
 use Mix.Config
 
+# Configures format encoders
+config :phoenix, :format_encoders,
+    html: Phoenix.Template.HTML,
+    svg: Phoenix.Template.HTML,
+    json: Poison
+
 # Configures the endpoint
 config :gallows, GallowsWeb.Endpoint,
   url: [host: "localhost"],
