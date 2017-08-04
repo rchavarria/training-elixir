@@ -7,6 +7,10 @@ defmodule GallowsWeb.HangmanView do
     tally.letters |> Enum.join(" ")
   end
 
+  def used_letters(tally) do
+    tally.used |> Enum.join(", ")
+  end
+
   def new_game_button(conn) do
     button("New game", to: hangman_path(conn, :create_game))
   end

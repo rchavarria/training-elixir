@@ -6,6 +6,10 @@
   Word so far: <%= word_so_far(@tally) %>
 </p>
 
+<p>
+  You already used: <%= used_letters(@tally) %>
+</p>
+
 <%= if game_over?(@tally) do %>
   <%= new_game_button(@conn) %>
 <% else %>
