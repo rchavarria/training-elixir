@@ -155,3 +155,61 @@ Take advantage of this to keep your all your code neat, tidy, and to the point.
 
 ## Wrapping up: adding graphics
 
+By convention a template that is intended to be used only inside another template will have a leading underscore in its name. These are sometimes called partial templates, or *partials*. Use partial templates to break large templates into more manageable chunks. In particular, I like to arrange things so that all the code in a template is at roughly the same level, and that it doesn’t get deeper that about three levels of nesting.
+
+When you create a Phoenix app, you get Twitter bootstrap included.
+
+**Rendering Files**
+
+There’s a wee subtlety when in comes to rendering templates. Phoenix uses the file type to determine how the file should be rendered before it goes on the wire. For example, `_gallows.html.eex` would be treated as a file containing HTML, and json would be JSON encoded.
+
+Phoenix doesn’t know the `.svg` type, so if our image was stored in `_gallows.svg.eex`, it would fall back on rendering it is text, and all the <, >, and & characters would be HTML encoded.
+
+We could fix this by doing some configuration:
+
+```
+config :phoenix, 
+  :format_encoders,
+    html: Phoenix.HTML.Engine,
+    svg: Phoenix.HTML.Engine,
+    json: Poison
+```
+
+**An Observation…**
+
+We got this far writing small, single-purpose Elixir applications. As a result, here’s the sum total of the “business logic” in out Phoenix application:
+
+```
+def new_game(conn, _params) do
+  render(conn, "new_game.html")
+end
+
+def create_game(conn, _params) do
+  game  = Hangman.new_game()
+  tally = Hangman.tally(game)
+
+  conn
+  |> put_session(:game, game)
+  |> render("game_field.html", tally: tally)
+end
+
+def make_move(conn, params) do
+  guess = params["make_move"]["guess"]
+  tally =
+  conn
+  |> get_session(:game)
+  |> Hangman.make_move(guess)
+
+  put_in(conn.params["make_move"]["guess"], "")
+  |> render("game_field.html", tally: tally)
+end
+```
+
+Three functions, whose collective raison d’être is to act as an interface between a connection and the Hangman server.
+
+I find this immensely satisfying. There’s no magic, no special cases, and, most importantly, no unnecessary coupling. There’s no temptation to add just one little business function to the controller, because there’s nowhere to put it.
+
+I like Elixir and Phoenix because they let me write in this style. I can write clear, maintainable, and performant code, where every function represents a clear transformation of state.
+
+And we’re not done yet!
+
