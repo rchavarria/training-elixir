@@ -19,9 +19,7 @@ defmodule GallowsWeb.HangmanView do
     state in [ :won, :lost ]
   end
 
-  def turn(left, target) when target >= left do
-    "opacity: 1"
-  end
-  def turn(_left, _target), do: "opacity: 0.1"
+  def turn(left, target) when target < left, do: "dim"
+  def turn(_left, _target), do: ""
 
 end
