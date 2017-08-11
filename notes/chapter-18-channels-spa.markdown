@@ -68,6 +68,22 @@ I use Chrome, and its DevTools has a handy-dandy WebSocket inspector build in. C
 
 ## Joining a channel
 
+On the client, the sequence is
+
+```javascript
+// /socket matches the name in endpoint.ex
+
+let socket = new Socket("/socket", {})
+socket.connect()
+
+// hangman.game is the topic. It is routed though
+// user_socket.ex to hangman_channel.ex
+let channel = socket.channel("hangman:game", {})
+channel.join()
+```
+
+We’ll see in the next unit that the `join()` call is asynchronous.
+
 ## Pushing the tally from the server
 
 ## Introduction to data binding

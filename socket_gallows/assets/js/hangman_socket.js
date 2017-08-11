@@ -7,4 +7,9 @@ export default class HangmanSocket {
     this.socket.connect()
   }
 
+  connect_to_hangman() {
+    this.channel = this.socket.channel("hangman:game", {})
+    this.channel.join()
+  }
+
 }
