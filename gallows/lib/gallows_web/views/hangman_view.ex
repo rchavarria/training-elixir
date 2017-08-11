@@ -12,7 +12,7 @@ defmodule GallowsWeb.HangmanView do
   end
 
   def new_game_button(conn) do
-    button("New game", to: hangman_path(conn, :create_game))
+    button("New game", to: hangman_path(conn, :create_game), method: "get")
   end
 
   def game_over?(%{ game_state: state }) do
