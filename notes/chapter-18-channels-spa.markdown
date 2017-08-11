@@ -18,7 +18,7 @@ We can have multiple channels on each socket. One browser gets only one socket.
 
 Phoenix terminology: the *endpoint* defines a socket (similar to HTTP endpoints), the *socket* defines the channels, the *channels* handle the messages
 
-## Configuring channes support
+## Configuring channels support
 
 The endpoint can be found on `lib/socket_gallows_web/endpoint.ex`
 
@@ -47,6 +47,24 @@ Think of the flexibility this gives us. We could version our API by simply deplo
 It seems to make a lot of sense.
 
 ## Adding JavaScript
+
+We can start adding JavaScript code to `/assets/js/app.js`
+
+**What We Saw**
+
+Brunch bundles your application’s JavaScripts into a single file. This is stored in `priv/static/js/app.js`, and rebuilt every time you build the app.
+
+Brunch constructs this from `assets/js/app.js`, which can be considered to be the entry point for your JavaScript code. Any additional JavaScript files imported or required into this file (either directly or transitively) will be included in the target `app.js`.
+
+The default `assets/js/app.js` simply imports `phoenix_html`. This contains support code for all Phoenix apps.
+
+We wrote our Hangman code in the file `hangman_app.js`, and included it in the file build by importing it into `app.js`. Remember to use a relative path to refer to JavaScript files in the local file tree.
+
+Later, we’ll add view-related code to `hangman_app.js`. To keep our code clean, we added a second JavaScript file, `hangman_socket.js`, to handle the traffic to and from the server.
+
+We can use the default Phoenix `PageController`, view, and template to load our JavaScript into the browser. As we’ll see later, you can also use it to populate a template DOM for the client-side JavaScript to use.
+
+I use Chrome, and its DevTools has a handy-dandy WebSocket inspector build in. Click the WS (web socket) button at the top of the network tab.
 
 ## Joining a channel
 
