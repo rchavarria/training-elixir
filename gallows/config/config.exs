@@ -5,10 +5,16 @@
 # is restricted to this project.
 use Mix.Config
 
+# Configures format encoders
+config :phoenix, :format_encoders,
+    html: Phoenix.Template.HTML,
+    svg: Phoenix.Template.HTML,
+    json: Poison
+
 # Configures the endpoint
 config :gallows, GallowsWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "fEXpN/XdxwViT2iYUnVCeuVYwGk7JZ0tkuDNpoXR8US4cwsF3R16UwIbKq9sY2PA",
+  secret_key_base: "hqe0UtVQ8R6ZS8u++HhRHwIeoJQvfC2UtLdW5otOD2tW+I17FZENrrNqoFxvGp5x",
   render_errors: [view: GallowsWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Gallows.PubSub,
            adapter: Phoenix.PubSub.PG2]

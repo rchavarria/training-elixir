@@ -1,0 +1,4 @@
+<h1>Welcome to Hangman!</h1>
+
+<%= new_game_button(@conn) %>
+

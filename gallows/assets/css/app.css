@@ -1,1 +1,6 @@
 /* This file is for your main application css. */
+
+/* display dimly, behind some courtain */
+.dim {
+  opacity: 0.1;
+}
