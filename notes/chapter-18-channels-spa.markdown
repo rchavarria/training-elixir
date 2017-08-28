@@ -86,6 +86,43 @@ We’ll see in the next unit that the `join()` call is asynchronous.
 
 ## Pushing the tally from the server
 
+The call to `channel.join()` is asynchronous, which means we have to register callback functions for the success and failure returns.
+
+```javascript
+  this.channel
+      .join()
+      .receive("ok", resp => {
+        console.log("Joined successfully", resp)
+        this.fetch_tally()
+      })
+      .receive("error", resp => {
+        alert("Unable to join", resp)
+        throw(resp)
+      })
+```
+
+In fact, from this point on both the client and server are operating as asynchronous event handlers, running when messages are received over the channel (and when the player interacts on the client).
+
+When the server receives a `join` request, it can initialize state that can be used for the rest of the conversation.
+
+The `socket` value that is passed to every WS call is similar to the `conn` value passed in HTML controllers—it can be updated as events are handled and passed to the next event.
+
+A `conn` value uses the `session` field for this, but the `socket` value has a field called `assigns`. (This is poor naming, because it has nothing to do with the concept of assigns on the HTML side.)
+
+On the server, we handle incoming messages by writing callbacks
+
+```
+def handle_in("tally", _, socket) do ...
+```
+
+As all functions are called using pattern matching, you can write multiple versions of this function that respond both to different message names and potentially to different values in the paramaters passed on in the socket.
+
+On the client, we handle incoming messages using
+
+```
+channel.on("tally", response => { . . . })
+```
+
 ## Introduction to data binding
 
 ## Finishing the client
