@@ -6,10 +6,10 @@
 use Mix.Config
 
 # Configures the endpoint
-config :socket_gallows, SocketGallowsWeb.Endpoint,
+config :socket_gallows, SocketGallows.Web.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "OlnOd04tlM9AAaVzs5HEOU4z0916ld4N2Q3xlsRg2UBWaTpB6cVO/qJ/Y9EZ2o2r",
-  render_errors: [view: SocketGallowsWeb.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "KtigD/dCrLpdyF5HkAh7EKa09alQBredg9TAEktNCJe/qv5ZzyEo1Noj7cxivcRp",
+  render_errors: [view: SocketGallows.Web.ErrorView, accepts: ~w(html json)],
   pubsub: [name: SocketGallows.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

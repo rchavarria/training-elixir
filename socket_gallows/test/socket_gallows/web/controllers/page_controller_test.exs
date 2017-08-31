@@ -1,5 +1,5 @@
-defmodule SocketGallowsWeb.PageControllerTest do
-  use SocketGallowsWeb.ConnCase
+defmodule SocketGallows.Web.PageControllerTest do
+  use SocketGallows.Web.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

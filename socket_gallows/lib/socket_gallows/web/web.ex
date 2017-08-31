@@ -1,45 +1,44 @@
-defmodule SocketGallowsWeb do
+defmodule SocketGallows.Web do
   @moduledoc """
-  The entrypoint for defining your web interface, such
-  as controllers, views, channels and so on.
+  A module that keeps using definitions for controllers,
+  views and so on.
 
   This can be used in your application as:
 
-      use SocketGallowsWeb, :controller
-      use SocketGallowsWeb, :view
+      use SocketGallows.Web, :controller
+      use SocketGallows.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
   on imports, uses and aliases.
 
   Do NOT define functions inside the quoted expressions
-  below. Instead, define any helper function in modules
-  and import those modules here.
+  below.
   """
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: SocketGallowsWeb
+      use Phoenix.Controller, namespace: SocketGallows.Web
       import Plug.Conn
-      import SocketGallowsWeb.Router.Helpers
-      import SocketGallowsWeb.Gettext
+      import SocketGallows.Web.Router.Helpers
+      import SocketGallows.Web.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/socket_gallows_web/templates",
-                        namespace: SocketGallowsWeb
+      use Phoenix.View, root: "lib/socket_gallows/web/templates",
+                        namespace: SocketGallows.Web
 
       # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
+      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import SocketGallowsWeb.Router.Helpers
-      import SocketGallowsWeb.ErrorHelpers
-      import SocketGallowsWeb.Gettext
+      import SocketGallows.Web.Router.Helpers
+      import SocketGallows.Web.ErrorHelpers
+      import SocketGallows.Web.Gettext
     end
   end
 
@@ -54,7 +53,7 @@ defmodule SocketGallowsWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import SocketGallowsWeb.Gettext
+      import SocketGallows.Web.Gettext
     end
   end
 

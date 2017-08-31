@@ -1,4 +1,4 @@
-defmodule SocketGallowsWeb.ErrorHelpers do
+defmodule SocketGallows.Web.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule SocketGallowsWeb.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(SocketGallowsWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(SocketGallows.Web.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(SocketGallowsWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(SocketGallows.Web.Gettext, "errors", msg, opts)
     end
   end
 end

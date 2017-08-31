@@ -1,4 +1,4 @@
+window.Vue = require("vue/dist/vue.js")
 import "phoenix_html"
-// import socket from "./socket"
-
 import "./hangman_app"
+

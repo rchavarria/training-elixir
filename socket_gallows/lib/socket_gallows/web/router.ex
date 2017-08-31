@@ -1,5 +1,5 @@
-defmodule SocketGallowsWeb.Router do
-  use SocketGallowsWeb, :router
+defmodule SocketGallows.Web.Router do
+  use SocketGallows.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,14 +13,14 @@ defmodule SocketGallowsWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", SocketGallowsWeb do
+  scope "/", SocketGallows.Web do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SocketGallowsWeb do
+  # scope "/api", SocketGallows.Web do
   #   pipe_through :api
   # end
 end

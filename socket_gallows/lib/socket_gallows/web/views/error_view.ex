@@ -1,5 +1,5 @@
-defmodule SocketGallowsWeb.ErrorView do
-  use SocketGallowsWeb, :view
+defmodule SocketGallows.Web.ErrorView do
+  use SocketGallows.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"
