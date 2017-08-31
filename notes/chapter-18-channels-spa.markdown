@@ -125,6 +125,33 @@ channel.on("tally", response => { . . . })
 
 ## Introduction to data binding
 
+Client considerations:
+
+1. Pushing to and getting events from Phoenix is easy
+2. Keeping the UI state in step is more difficult. We'll use data binding instead of raw event handlers to update the UI
+
+We're going to use [Vue.js](https://vuejs.org/) to do that data binding. One of the first steps is to create an initial state for our application. We're going to use the `tally` returned by the server as a scheleton for our data model, our application state.
+
 ## Finishing the client
 
+What We Saw
+
+- Vue is one of a large number of JavaScript libraries that perform two-way mapping between a single definitive data source and its appearance on the browser screen (or, more accurately, its representation in the browser’s Document Object Model, or DOM).
+
+- We tell Vue to manage a JavaScript object that represents the tally created by our game. Once that’s done, we can reference values in this object by name in our view. When the server sends changes, the view updates automatically.
+
+- Vue can use the values in out object to represent both displayed data and the attributes on HTML tags (such as class and disabled). It also supports computed values, which look like data in the data source but are actually computed from it.
+
+- Vue also supports callback methods, which make it each to tie browser events to code to be run.
+
+- Careful choice of a JavaScript framework can dramatically simplify writing a client-side application.
+
+The Final Code is available in our repository in the branch 180-code-channels:
+
+```bash
+$ git clone https://github.com/pragdave/e4p-code.git # if needed
+$ git fetch origin 180-code-channels
+$ git checkout 180-code-channels
+$ cd game/socket_gallows
+```
 
