@@ -77,7 +77,7 @@ window.onload = function() {
 
     document.addEventListener("keyup", function (event) {
       keyup_listener(event, hangman)
-    }
+    })
 
     hangman.connect_to_hangman()
 }

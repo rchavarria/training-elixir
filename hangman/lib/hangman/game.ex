@@ -44,7 +44,7 @@ defmodule Hangman.Game do
     %Tally{
       game_state: game.game_state,
       turns_left: game.turns_left,
-      letters:    game.letters |> reveal_guessed(game.used),
+      letters:    tally_letters(game),
       used:       game.used
     }
   end
@@ -97,6 +97,11 @@ defmodule Hangman.Game do
     # Or putting it prettier   %{ <map> | <key> <value> }
     %{ game | game_state: :bad_guess,
               turns_left: turns_left - 1 }
+  end
+
+  defp tally_letters(game = %{ game_state: :lost }), do: game.letters
+  defp tally_letters(game) do
+      game.letters |> reveal_guessed(game.used)
   end
 
   defp reveal_guessed(letters, used) do

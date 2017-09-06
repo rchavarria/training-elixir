@@ -127,4 +127,16 @@ defmodule GameTest do
     end)
   end
 
+  test "the word is shown when you lose" do
+    guesses = [ "a", "b", "c", "d", "e", "f", "g" ]
+    game = Game.new_game("work")
+    tally = Game.tally(game)
+
+    { _, tally } = Enum.reduce(guesses, { game, tally }, fn (guess, { game, _tally }) -> 
+      Game.make_move(game, guess)
+    end)
+
+    assert tally.letters == String.codepoints("work")
+  end
+
 end

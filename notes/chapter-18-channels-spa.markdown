@@ -155,3 +155,9 @@ $ git checkout 180-code-channels
 $ cd game/socket_gallows
 ```
 
+### Exercises
+
+**If you lose a game, you currently never get to see the correct word. Change the hangman server to return the correct word in the letters list when a game is lost, and update the client to display it**
+
+Done. The Hangman game builds the *tally* slightly different, showing all letters, guessed and not guessed.
+
