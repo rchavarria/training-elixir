@@ -1,6 +1,7 @@
 const RESPONSES = {
     won:          [ "success", "You Won!" ],
     lost:         [ "danger",  "You Lost!" ],
+    lost_timeout: [ "danger",  "It took you too much time, Loser!" ],
     good_guess:   [ "success", "Good guess!" ],
     bad_guess:    [ "warning", "Bad guess!" ],
     already_used: [ "info",    "You already guessed that" ],
@@ -18,7 +19,7 @@ let view = function(hangman) {
         computed: {
             game_over: function() {
                 let state = this.tally.game_state
-                return (state == "won") || (state == "lost")
+                return (state == "won") || (state == "lost") || (state == "lost_timeout")
             },
             game_state_message: function() {
                 let state = this.tally.game_state
@@ -67,10 +68,11 @@ function keyup_listener(event, hangman) {
 
 window.onload = function() {
     let tally = {
-        turns_left: 7,
-        letters:    ["a", "_", "c" ],
-        game_state: "initializing",
-        used:       [ ]
+        turns_left:   7,
+        letters:      ["a", "_", "c" ],
+        game_state:   "initializing",
+        used:         [ ],
+        seconds_left: 60
     }
     let hangman = new HangmanSocket(tally)
     let app     = view(hangman)

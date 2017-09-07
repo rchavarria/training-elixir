@@ -161,3 +161,9 @@ $ cd game/socket_gallows
 
 Done. The Hangman game builds the *tally* slightly different, showing all letters, guessed and not guessed.
 
+**(Mildly difficult) Let’s introduce a new challenge: a hangman game must be solved within 60 seconds, or you lose**
+
+Done. There is a timeout.
+
+But it's not perfect. If you solve the problem or you fail at it and start a new game before the 60 seconds timeout, the client receives ticks from two games (the finished one and the recently started one).
+

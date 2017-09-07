@@ -26,6 +26,9 @@ export default class HangmanSocket {
         this.channel.on("tally", (tally) => {
             this.copy_tally(tally)
         })
+        this.channel.on("tick", (tick) => {
+            this.tick(tick)
+        })
     }
 
     fetch_tally() {
@@ -44,6 +47,10 @@ export default class HangmanSocket {
         for (let k in from) {
             this.tally[k] = from[k]
         }
+    }
+
+    tick(tick) {
+      this.tally.seconds_left = tick.seconds_left
     }
 }
 

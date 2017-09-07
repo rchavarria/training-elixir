@@ -1,3 +1,7 @@
+<p class="turns-left">
+  Seconds left: {{ tally.seconds_left }}
+</p>
+
 <svg id="drawing"
      xmlns="http://www.w3.org/2000/svg"
      x-height="155mm"
